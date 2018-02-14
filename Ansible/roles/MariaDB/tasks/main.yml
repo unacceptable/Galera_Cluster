@@ -1,13 +1,23 @@
 - name: Install MariaDB on CentOS Servers
   yum:
-      name: mariadb-server
+      name: "{{ item }}"
       state: present
+  with_items:
+      - mariadb-server
+      - galera-3
   become: true
   when: ansible_os_family == "CentOS"
 
 - name: Install MariaDB on Debian Servers
   apt:
-      name: mariadb-server
+      name: "{{ item }}"
       state: present
+  with_items:
+      - mariadb-server
+      - mariadb-client-10.2
+      - mariadb-client
+      - galera-3
+      - python-mysqldb
+      - rsync
   become: true
   when: ansible_os_family == "Debian"

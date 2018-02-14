@@ -5,9 +5,9 @@ resource "aws_elb" "MariaDB" {
     ]
 
     listener {
-        instance_port       = 3606
+        instance_port       = 3306
         instance_protocol   = "tcp"
-        lb_port             = 3606
+        lb_port             = 3306
         lb_protocol         = "tcp"
     }
     cross_zone_load_balancing = true

@@ -1,0 +1,6 @@
+- name: Disable UFW in favor of EC2s Firewall
+  ufw:
+      state: disabled
+      policy: allow
+  become: true
+  when: ansible_os_family == "Debian"

@@ -71,7 +71,8 @@ def inventory_call(filters):
         '_meta': {
             'hostvars': get_meta(instances)
         },
-        region: ids
+        region: ids,
+        Name: ids
     }
 
     return json_data

@@ -1,0 +1,7 @@
+- name: Install MariaDB Repository
+  shell: |
+    wget https://downloads.mariadb.com/MariaDB/mariadb_repo_setup
+    bash mariadb_repo_setup >> /var/log/ansible_repo_config
+  args:
+    creates: /etc/apt/sources.list.d/mariadb.list
+  become: true

@@ -1,0 +1,4 @@
+galera_user: galera
+galera_pass: galera
+galera_wsrep_cluster_name: ansible_galera_cluster
+galera_cluster_interface: ansible_eth0

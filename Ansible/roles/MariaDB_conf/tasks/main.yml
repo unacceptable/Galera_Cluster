@@ -1,0 +1,34 @@
+- name: Ensure MariaDB is running
+  service:
+    name: mariadb
+    state: started
+  become: true
+
+- name: Cleanup Galera default config files
+  file:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - /etc/mysql/conf.d/mariadb.cnf
+    - /etc/mysql/conf.d/server.cnf
+  become: true
+
+- name: Add Galera User
+  notify: Bootstrap Galera
+  mysql_user:
+    name: "{{ galera_user }}"
+    host: "localhost"
+    password: "{{ galera_pass }}"
+    priv: "*.*:ALL"
+    append_privs: yes
+  become: true
+
+- name: Add galera configuration
+  template:
+      src: server.cnf.j2
+      dest: /etc/mysql/conf.d/galera.cnf
+      owner: root
+      group: root
+      mode: 0644
+  become: true
+
