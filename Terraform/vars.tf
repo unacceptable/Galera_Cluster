@@ -7,7 +7,7 @@ data "aws_availability_zones" "available" {}
 variable "global" {
     type = "map"
     default = {
-        environment = "td"
+        environment = "Staging"
         region      = "us-west-2"
     }
 }

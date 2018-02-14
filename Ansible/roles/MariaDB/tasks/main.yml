@@ -1,0 +1,13 @@
+- name: Install MariaDB on CentOS Servers
+  yum:
+      name: mariadb-server
+      state: present
+  become: true
+  when: ansible_os_family == "CentOS"
+
+- name: Install MariaDB on Debian Servers
+  apt:
+      name: mariadb-server
+      state: present
+  become: true
+  when: ansible_os_family == "Debian"

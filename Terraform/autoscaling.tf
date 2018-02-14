@@ -7,7 +7,7 @@ resource "aws_launch_configuration" "MariaDB" {
         "${var.sgs}"
     ]
     associate_public_ip_address     = true
-    # user_data                       = "${lookup(var.ec2, "bootstrap")}"
+    user_data                       = "${file("bootstrap.sh")}"
     spot_price                      = "${lookup(var.ec2, "spot_price")}"
 }
 
