@@ -5,13 +5,13 @@
     name: mariadb
     state: stopped
   become: true
-  when: (inventory_hostname == groups['MariaDB'][0])
+  when: (inventory_hostname == groups['DB_Cluster'][0])
 
 - name: Bootstrap first MariaDB Galera cluster node
   listen: Bootstrap Galera
   command: galera_new_cluster
   become: true
-  when: (inventory_hostname == groups['MariaDB'][0])
+  when: (inventory_hostname == groups['DB_Cluster'][0])
 
 - name: Restart the other MariaDB Galera cluster nodes
   listen: Bootstrap Galera
@@ -19,36 +19,5 @@
     name: mariadb
     state: restarted
   become: true
-  when: (inventory_hostname != groups['MariaDB'][0])
+  when: (inventory_hostname != groups['DB_Cluster'][0])
 
-# Restart Galera
-
-- name: Stop MariaDB on all but the first node
-  listen: Restart Galera Cluster
-  service:
-    name: mariadb
-    state: stopped
-  become: true
-  when: (inventory_hostname != groups['MariaDB'][0])
-
-- name: Stop MariaDB on the first node
-  listen: Restart Galera Cluster
-  service:
-    name: mariadb
-    state: stopped
-  become: true
-  when: (inventory_hostname == groups['MariaDB'][0])
-
-- name: Start Galera on the first node
-  listen: Restart Galera Cluster
-  command: galera_new_cluster
-  become: true
-  when: (inventory_hostname == groups['MariaDB'][0])
-
-- name: Restart the other MariaDB Galera cluster nodes
-  listen: Restart Galera Cluster
-  service:
-    name: mariadb
-    state: restarted
-  become: true
-  when: (inventory_hostname != groups['MariaDB'][0])

@@ -11,7 +11,7 @@ import os
 #######################################
 
 region      = os.environ.get('region', 'us-west-2')
-Name        = os.environ.get('Name', 'MariaDB')
+Name        = os.environ.get('Name', 'DB_Cluster')
 key_path    = os.environ.get('key_path', '~/.ssh/AWS/')
 ssh_user    = os.environ.get('ssh_user', 'ubuntu')
 

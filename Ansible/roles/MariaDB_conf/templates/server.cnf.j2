@@ -5,11 +5,11 @@ innodb_autoinc_lock_mode=2
 bind-address=0.0.0.0
 
 # Confluence Configs
-character-set-server=utf8
-collation-server=utf8_bin
-max_allowed_packet=256M
-innodb_log_file_size=2GB
-transaction-isolation=READ-COMMITTED 
+# character-set-server=utf8
+# collation-server=utf8_bin
+# max_allowed_packet=256M
+# innodb_log_file_size=2GB
+# transaction-isolation=READ-COMMITTED
 
 # Galera Provider Configuration
 wsrep_on=ON
@@ -17,8 +17,8 @@ wsrep_provider=/usr/lib/galera/libgalera_smm.so
 
 # Galera Cluster Configuration
 wsrep_cluster_name={{ galera_wsrep_cluster_name }}
-wsrep_cluster_address = "gcomm://{{ groups['MariaDB'] | map('extract', hostvars, [galera_cluster_interface,'ipv4','address']) | list | join(',') }}"
-# Galera Synchronization Configuration
+wsrep_cluster_address = "gcomm://{{ groups['DB_Cluster'] | map('extract', hostvars, [galera_cluster_interface,'ipv4','address']) | list | join(',') }}"
+#  Galera Synchronization Configuration
 
 # Galera Node Configuration
 wsrep_node_address={{ ansible_eth0.ipv4.address }}
