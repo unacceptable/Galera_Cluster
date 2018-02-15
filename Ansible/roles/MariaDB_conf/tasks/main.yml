@@ -17,13 +17,31 @@
   notify: Bootstrap Galera
   mysql_user:
     name: "{{ galera_user }}"
-    host: "localhost"
     password: "{{ galera_pass }}"
     priv: "*.*:ALL"
+    host: "localhost"
+    append_privs: yes
+  become: true
+
+- name: Add confluence database
+  mysql_db:
+    name: confluence
+    state: present
+    encoding: utf8
+    collation: utf8_bin
+  become: true
+
+- name: Add Confluence user
+  mysql_user:
+    name: confluence_user
+    password: confluence_password
+    priv: "confluence.*:ALL"
+    host: '%'
     append_privs: yes
   become: true
 
 - name: Add galera configuration
+  notify: Restart Galera Cluster
   template:
       src: server.cnf.j2
       dest: /etc/mysql/conf.d/galera.cnf
@@ -31,4 +49,3 @@
       group: root
       mode: 0644
   become: true
-
