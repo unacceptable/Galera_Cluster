@@ -1,4 +1,4 @@
-resource "aws_launch_configuration" "MariaDB" {
+resource "aws_launch_configuration" "DB_Cluster" {
     name                            = "${lookup(var.ec2, "lc_name")}"
     image_id                        = "${lookup(var.ec2, "image")}"
     instance_type                   = "${lookup(var.ec2, "size")}"
@@ -11,9 +11,9 @@ resource "aws_launch_configuration" "MariaDB" {
     spot_price                      = "${lookup(var.ec2, "spot_price")}"
 }
 
-resource "aws_autoscaling_group" "MariaDB" {
+resource "aws_autoscaling_group" "DB_Cluster" {
     depends_on                      = [
-        "aws_launch_configuration.MariaDB"
+        "aws_launch_configuration.DB_Cluster"
     ]
 
     availability_zones              = [
@@ -43,6 +43,6 @@ resource "aws_autoscaling_group" "MariaDB" {
     ]
 
     load_balancers                  = [
-        "MariaDB-ELB"
+        "DBCluster-ELB"
     ]
 }
