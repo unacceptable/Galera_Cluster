@@ -6,12 +6,19 @@ set -e
 # This script is called from Terraform via ansible.tf
 
 main(){
-    IP="$(get_ip)";
-    check_host "$IP";
+    IPs="$(get_ips)";
+
+    while read -r IP; do
+        echo "$IP";
+        check_host "$IP";
+    done < <( echo "${IPs}" )
+
+    sleep 10; # give python a few seconds to install
+
     exec_ansible;
 }
 
-get_ip(){
+get_ips(){
     JSON='[
         {
             "Name": "tag:Name",
@@ -30,7 +37,7 @@ get_ip(){
     aws ec2 \
         describe-instances \
         --filter "$JSON" | \
-            jq ".Reservations[0].Instances[0].PublicIpAddress" -r
+            jq ".Reservations[].Instances[].PublicIpAddress" -r
 }
 
 check_host(){
@@ -39,9 +46,8 @@ check_host(){
     until
         nmap -p 22  "$IP" -Pn | grep -i ^host;
     do
-        sleep 2;
-    done &&
-        sleep 10; # give python a few seconds to install
+        sleep 1;
+    done
 }
 
 exec_ansible(){
