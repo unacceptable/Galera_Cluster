@@ -14,6 +14,7 @@ resource "null_resource" "ansible_exec" {
     ]
 
     provisioner "local-exec" {
-        command = "${file("local-exec-ansible.sh")}"
+        command     = "echo 'This command doesn't matter but I must put it in for some reason'"
+        interpreter = ["/bin/bash", "./local-exec-ansible.sh"]
     }
 }

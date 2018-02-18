@@ -43,6 +43,6 @@ resource "aws_autoscaling_group" "DB_Cluster" {
     ]
 
     load_balancers                  = [
-        "DBCluster-ELB"
+        "${lookup(var.elb,"name")}"
     ]
 }

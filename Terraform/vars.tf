@@ -12,6 +12,20 @@ variable "global" {
     }
 }
 
+variable "elb" {
+    type = "map"
+    default = {
+        name                = "galera"
+        endpoint            = "galera.scriptmyjob.com"
+        internal            = true
+        instance_port       = 3306
+        instance_protocol   = "tcp"
+        lb_port             = 3306
+        lb_protocol         = "tcp"
+        cross_zone_lb       = true
+    }
+}
+
 variable "vpc" {
     type = "map"
     default = {
