@@ -1,6 +1,6 @@
 - hosts: all
   roles:
-      - MariaDB_Security
-      - MariaDB_repo
-      - MariaDB
-      - MariaDB_conf
+      - firewall
+      - repos
+      - database
+      - database_conf

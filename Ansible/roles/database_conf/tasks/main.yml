@@ -19,7 +19,7 @@
     name: "{{ galera_user }}"
     password: "{{ galera_pass }}"
     priv: "*.*:ALL"
-    host: "localhost"
+    host: "%.compute.internal"
     append_privs: yes
   become: true
 
