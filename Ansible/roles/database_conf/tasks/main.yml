@@ -1,16 +1,7 @@
-- name: Ensure MariaDB is running
+- name: Ensure MySQL is running
   service:
-    name: mariadb
+    name: mysql
     state: started
-  become: true
-
-- name: Cleanup Galera default config files
-  file:
-    name: "{{ item }}"
-    state: absent
-  with_items:
-    - /etc/mysql/conf.d/mariadb.cnf
-    - /etc/mysql/conf.d/server.cnf
   become: true
 
 - name: Add Galera User

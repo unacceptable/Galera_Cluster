@@ -1,7 +1,23 @@
-- name: Install MariaDB Repository
-  shell: |
-    wget https://downloads.mariadb.com/MariaDB/mariadb_repo_setup
-    bash mariadb_repo_setup >> /var/log/ansible_repo_config
-  args:
-    creates: /etc/apt/sources.list.d/mariadb.list
+- name: Install MySQL Repository Key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: "{{ item }}"
+  loop:
+    - BC19DDBA
+  become: true
+
+- name: Install Galera Repository
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+    filename: Galera
+  loop:
+    - deb http://releases.galeracluster.com/mysql-wsrep-5.6/ubuntu xenial main
+    - deb http://releases.galeracluster.com/galera-3/ubuntu xenial main
+  become: true
+
+- name: Configure Preference for Codership repository
+  template:
+    src: ../templates/Galera.pref.j2
+    dest: /etc/apt/preferences.d/Galera.pref
   become: true

@@ -1,22 +1,22 @@
 # Bootstrap
-- name: Stop MariaDB on first MariaDB Galera cluster node
+- name: Stop MySQL on first Galera cluster node
   listen: Bootstrap Galera
   service:
-    name: mariadb
+    name: mysql
     state: stopped
   become: true
   when: (inventory_hostname == groups['DB_Cluster'][0])
 
-- name: Bootstrap first MariaDB Galera cluster node
+- name: Bootstrap first Galera cluster node
   listen: Bootstrap Galera
-  command: galera_new_cluster
+  command: /etc/init.d/mysql start --wsrep-new-cluster
   become: true
   when: (inventory_hostname == groups['DB_Cluster'][0])
 
-- name: Restart the other MariaDB Galera cluster nodes
+- name: Restart MySQL on the other Galera cluster nodes
   listen: Bootstrap Galera
   service:
-    name: mariadb
+    name: mysql
     state: restarted
   become: true
   when: (inventory_hostname != groups['DB_Cluster'][0])
