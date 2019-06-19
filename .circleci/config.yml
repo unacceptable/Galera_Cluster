@@ -1,0 +1,18 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      - image: hashicorp/terraform:0.11.14
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - run:
+          name: Validate Terraform
+          command: |
+            terraform validate Terraform
